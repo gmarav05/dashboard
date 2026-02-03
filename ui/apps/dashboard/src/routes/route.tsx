@@ -42,6 +42,26 @@ import {
 import { Failover, Permission, Reschedule } from '@/pages/advanced-config';
 import { BuildInAddon, ThridPartyAddon } from '@/pages/addon';
 import ClusterManage from '@/pages/cluster-manage';
+import MemberCluster from '@/pages/member-cluster';
+import MemberClusterOverview from '@/pages/member-cluster/overview';
+import MemberClusterDeployments from '@/pages/member-cluster/workload/deployments';
+import MemberClusterCronJobs from '@/pages/member-cluster/workload/cronjobs';
+import MemberClusterDaemonSets from '@/pages/member-cluster/workload/daemonsets';
+import MemberClusterJobs from '@/pages/member-cluster/workload/jobs';
+import MemberClusterIngress from '@/pages/member-cluster/service/ingress';
+import MemberClusterServices from '@/pages/member-cluster/service/services';
+import MemberClusterConfigMaps from '@/pages/member-cluster/config/configmaps';
+import MemberClusterPersistentVolumeClaims from '@/pages/member-cluster/config/persistent-volume-claims';
+import MemberClusterSecrets from '@/pages/member-cluster/config/secrets';
+import MemberClusterClusterRoleBindings from '@/pages/member-cluster/cluster/cluster-role-bindings';
+import MemberClusterClusterRoles from '@/pages/member-cluster/cluster/cluster-roles';
+import MemberClusterEvents from '@/pages/member-cluster/cluster/events';
+import MemberClusterNamespaces from '@/pages/member-cluster/cluster/namespaces';
+import MemberClusterNodes from '@/pages/member-cluster/cluster/nodes';
+import MemberClusterPersistentVolumes from '@/pages/member-cluster/cluster/persistent-volumes';
+import MemberClusterRoleBindings from '@/pages/member-cluster/cluster/role-bindings';
+import MemberClusterRoles from '@/pages/member-cluster/cluster/roles';
+import MemberClusterServiceAccounts from '@/pages/member-cluster/cluster/service-accounts';
 import Login from '@/pages/login';
 import { Icons } from '@/components/icons';
 
@@ -294,6 +314,210 @@ export function getRoutes() {
       path: '/login',
       errorElement: <ErrorBoundary />,
       element: <Login />,
+    },
+    {
+      path: '/member-cluster/:memberCluster',
+      element: <MemberCluster />,
+      handle: {
+        sidebarKey: 'MEMBER-CLUSTER',
+        sidebarName: 'Member Cluster',
+        icon: <Icons.clusters {...IconStyles} />,
+        isPage: false,
+      },
+      children: [
+        {
+          path: 'overview',
+          element: <MemberClusterOverview />,
+          handle: {
+            sidebarKey: 'MEMBER-CLUSTER-OVERVIEW',
+            sidebarName: 'Overview',
+          },
+        },
+        {
+          path: 'workload',
+          handle: {
+            sidebarKey: 'MEMBER-CLUSTER-WORKLOAD',
+            sidebarName: 'Workload',
+            isPage: false,
+          },
+          children: [
+            {
+              path: 'cronjobs',
+              element: <MemberClusterCronJobs />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-CRONJOBS',
+                sidebarName: 'CronJobs',
+              },
+            },
+            {
+              path: 'daemonsets',
+              element: <MemberClusterDaemonSets />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-DAEMONSETS',
+                sidebarName: 'DaemonSets',
+              },
+            },
+            {
+              path: 'deployments',
+              element: <MemberClusterDeployments />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-DEPLOYMENTS',
+                sidebarName: 'Deployments',
+              },
+            },
+            {
+              path: 'jobs',
+              element: <MemberClusterJobs />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-JOBS',
+                sidebarName: 'Jobs',
+              },
+            }
+          ]
+        },
+        {
+          path: 'service',
+          handle: {
+            sidebarKey: 'MEMBER-CLUSTER-SERVICE',
+            sidebarName: 'Service',
+            isPage: false,
+          },
+          children: [
+            {
+              path: 'ingress',
+              element: <MemberClusterIngress />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-INGRESS',
+                sidebarName: 'Ingress',
+              },
+            },
+            {
+              path: 'services',
+              element: <MemberClusterServices />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-SERVICES',
+                sidebarName: 'Services',
+              },
+            }
+          ]
+        },
+        {
+          path: 'config',
+          handle: {
+            sidebarKey: 'MEMBER-CLUSTER-CONFIG-STORAGE',
+            sidebarName: 'Config & Storage',
+            isPage: false,
+          },
+          children: [
+            {
+              path: 'configmaps',
+              element: <MemberClusterConfigMaps />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-CONFIGMAPS',
+                sidebarName: 'ConfigMaps',
+              },
+            },
+            {
+              path: 'persistent-volume-claims',
+              element: <MemberClusterPersistentVolumeClaims />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-PVCS',
+                sidebarName: 'Persistent Volume Claims',
+              },
+            },
+            {
+              path: 'secrets',
+              element: <MemberClusterSecrets />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-SECRETS',
+                sidebarName: 'Secrets',
+              },
+            }
+          ]
+        },
+        {
+          path: 'cluster',
+          handle: {
+            sidebarKey: 'MEMBER-CLUSTER-CLUSTER',
+            sidebarName: 'Cluster',
+            isPage: false,
+          },
+          children: [
+            {
+              path: 'cluster-role-bindings',
+              element: <MemberClusterClusterRoleBindings />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-CLUSTER-ROLE-BINDINGS',
+                sidebarName: 'Cluster Role Bindings',
+              },
+            },
+            {
+              path: 'cluster-roles',
+              element: <MemberClusterClusterRoles />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-CLUSTER-ROLES',
+                sidebarName: 'Cluster Roles',
+              },
+            },
+            {
+              path: 'events',
+              element: <MemberClusterEvents />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-EVENTS',
+                sidebarName: 'Events',
+              },
+            },
+            {
+              path: 'namespaces',
+              element: <MemberClusterNamespaces />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-NAMESPACES',
+                sidebarName: 'Namespaces',
+              },
+            },
+            {
+              path: 'nodes',
+              element: <MemberClusterNodes />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-NODES',
+                sidebarName: 'Nodes',
+              },
+            },
+            {
+              path: 'persistent-volumes',
+              element: <MemberClusterPersistentVolumes />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-PERSISTENT-VOLUMES',
+                sidebarName: 'Persistent Volumes',
+              },
+            },
+            {
+              path: 'role-bindings',
+              element: <MemberClusterRoleBindings />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-ROLE-BINDINGS',
+                sidebarName: 'Role Bindings',
+              },
+            },
+            {
+              path: 'roles',
+              element: <MemberClusterRoles />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-ROLES',
+                sidebarName: 'Roles',
+              },
+            },
+            {
+              path: 'service-accounts',
+              element: <MemberClusterServiceAccounts />,
+              handle: {
+                sidebarKey: 'MEMBER-CLUSTER-SERVICE-ACCOUNTS',
+                sidebarName: 'Service Accounts',
+              },
+            }
+          ]
+        }
+      ]
     },
   ];
 

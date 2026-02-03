@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { KarmadaClusterSelector } from '@/components/member-cluster-selector';
 import { FC, CSSProperties } from 'react';
 import styles from './index.module.less';
 import karmadaLogo from '@/assets/karmada-logo.svg';
@@ -66,11 +67,16 @@ const Navigation: FC<INavigationProps> = (props) => {
           </div>
           <div className={styles.right}>
             {/* extra components */}
+            {/* multi-cluster switcher */}
+            <KarmadaClusterSelector />
 
             {/* karmada web-terminal */}
             <Icons.terminal
               width={20}
               height={20}
+              style={{
+                display: onTerminalClick ? 'block' : 'none',
+              }}
               className={styles.terminalIcon}
               onClick={() => onTerminalClick?.()}
             />
