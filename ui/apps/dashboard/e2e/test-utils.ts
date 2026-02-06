@@ -205,6 +205,8 @@ function escapeRegExp(text: string): string {
 }
 
 export async function selectSegmentedOption(page: Page, optionName: string): Promise<void> {
+    // Wait for segmented control to be visible before trying to interact
+    await page.waitForSelector('.ant-segmented', { state: 'visible', timeout: 30000 });
     const optionNameRegex = new RegExp(`^\\s*${escapeRegExp(optionName)}\\s*$`);
     const segmentedCandidates = page.locator('.ant-segmented').filter({
         has: page.locator('.ant-segmented-item', { hasText: optionNameRegex })
