@@ -51,9 +51,10 @@ interface UnstructuredParams {
 
 function generateUrlForUnstructuredParams(params: UnstructuredParams) {
   const { memberClusterName, kind, name, namespace } = params;
-  if (namespace) {
-    return `/clusterapi/${memberClusterName}/api/v1/_raw/${kind}/namespace/${namespace}/name/${name}`;
-  } else {
-    return `/clusterapi/${memberClusterName}/api/v1/_raw/${kind}/name/${name}`;
+  const segments = [memberClusterName, kind, name, namespace].filter(Boolean) as string[];
+  if (segments.some(s => s.includes('..') || s.includes('/') || s.includes('\\'))) {
+    throw new Error('Invalid characters in URL path segment. Path traversal sequences (.., /, \\) are not allowed.');
   }
+  return namespace ?
+      `/clusterapi/${memberClusterName}/api/v1/_raw/${kind}/namespace/${namespace}/name/${name}` : `/clusterapi/${memberClusterName}/api/v1/_raw/${kind}/name/${name}`;
 }

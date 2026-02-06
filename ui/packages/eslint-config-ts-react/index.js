@@ -44,15 +44,15 @@ module.exports = {
         '@typescript-eslint/no-namespace': 'off',
         //'@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-var-requires': 'off',
-        '@typescript-eslint/ban-types': [
-          'error',
-          {
-            extendDefaults: true,
-            types: {
-              '{}': false,
-            },
-          },
-        ],
+        // '@typescript-eslint/ban-types': [
+        //   'error',
+        //   {
+        //     extendDefaults: true,
+        //     types: {
+        //       '{}': false,
+        //     },
+        //   },
+        // ],
         'react-internal/no-production-logging': 'off',
         'react/display-name': 'off',
         'react/react-in-jsx-scope': 'off',

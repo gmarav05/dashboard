@@ -14,13 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  convertDataSelectQuery,
-  DataSelectQuery,
-  karmadaMemberClusterClient,
-  ObjectMeta,
-  TypeMeta,
-} from '../base';
+import {convertDataSelectQuery, DataSelectQuery, karmadaMemberClusterClient, ObjectMeta, TypeMeta,} from '../base';
 
 export interface ConfigMap {
   objectMeta: ObjectMeta;
@@ -53,7 +47,7 @@ export interface PersistentVolumeClaim {
   accessModes: string[];
   storageClass: string;
 }
-
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PersistentVolumeClaimDetail extends PersistentVolumeClaim {
 }
 
@@ -83,7 +77,7 @@ export async function GetMemberClusterConfigMaps(params: {
   if (keyword) {
     requestData.filterBy = ['name', keyword];
   }
-  const resp = await karmadaMemberClusterClient.get<{
+  return await karmadaMemberClusterClient.get<{
     errors: string[];
     listMeta: {
       totalItems: number;
@@ -92,7 +86,6 @@ export async function GetMemberClusterConfigMaps(params: {
   }>(url, {
     params: convertDataSelectQuery(requestData),
   });
-  return resp.data;
 }
 
 export async function GetMemberClusterConfigMapDetail(params: {
@@ -101,10 +94,9 @@ export async function GetMemberClusterConfigMapDetail(params: {
   name: string;
 }) {
   const { memberClusterName, namespace, name } = params;
-  const resp = await karmadaMemberClusterClient.get<{
+  return await karmadaMemberClusterClient.get<{
     errors: string[];
   } & ConfigMapDetail>(`/clusterapi/${memberClusterName}/api/v1/configmap/${namespace}/${name}`);
-  return resp.data;
 }
 
 export async function GetMemberClusterSecrets(params: {
@@ -124,7 +116,7 @@ export async function GetMemberClusterSecrets(params: {
   if (keyword) {
     requestData.filterBy = ['name', keyword];
   }
-  const resp = await karmadaMemberClusterClient.get<{
+  return await karmadaMemberClusterClient.get<{
     errors: string[];
     listMeta: {
       totalItems: number;
@@ -133,7 +125,6 @@ export async function GetMemberClusterSecrets(params: {
   }>(url, {
     params: convertDataSelectQuery(requestData),
   });
-  return resp.data;
 }
 
 export async function GetMemberClusterSecretDetail(params: {
@@ -142,10 +133,9 @@ export async function GetMemberClusterSecretDetail(params: {
   name: string;
 }) {
   const { memberClusterName, namespace, name } = params;
-  const resp = await karmadaMemberClusterClient.get<{
+  return await karmadaMemberClusterClient.get<{
     errors: string[];
   } & SecretDetail>(`/clusterapi/${memberClusterName}/api/v1/secret/${namespace}/${name}`);
-  return resp;
 }
 
 // Member Cluster PersistentVolumeClaim APIs
@@ -166,7 +156,7 @@ export async function GetMemberClusterPersistentVolumeClaims(params: {
   if (keyword) {
     requestData.filterBy = ['name', keyword];
   }
-  const resp = await karmadaMemberClusterClient.get<{
+  return await karmadaMemberClusterClient.get<{
     errors: string[];
     listMeta: {
       totalItems: number;
@@ -175,7 +165,6 @@ export async function GetMemberClusterPersistentVolumeClaims(params: {
   }>(url, {
     params: convertDataSelectQuery(requestData),
   });
-  return resp.data;
 }
 
 export async function GetMemberClusterPersistentVolumeClaimDetail(params: {
@@ -184,10 +173,9 @@ export async function GetMemberClusterPersistentVolumeClaimDetail(params: {
   name: string;
 }) {
   const { memberClusterName, namespace, name } = params;
-  const resp = await karmadaMemberClusterClient.get<{
+  return await karmadaMemberClusterClient.get<{
     errors: string[];
   } & PersistentVolumeClaimDetail>(`/clusterapi/${memberClusterName}/api/v1/persistentvolumeclaim/${namespace}/${name}`);
-  return resp.data;
 }
 
 export async function CreateMemberClusterImagePullSecret(params: {
@@ -195,9 +183,8 @@ export async function CreateMemberClusterImagePullSecret(params: {
   spec: ImagePullSecretSpec;
 }) {
   const { memberClusterName, spec } = params;
-  const resp = await karmadaMemberClusterClient.post<Secret>(
-    `/clusterapi/${memberClusterName}/api/v1/secret`,
-    spec,
+  return await karmadaMemberClusterClient.post<Secret>(
+      `/clusterapi/${memberClusterName}/api/v1/secret`,
+      spec,
   );
-  return resp.data;
 }

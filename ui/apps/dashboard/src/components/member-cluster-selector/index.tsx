@@ -45,7 +45,7 @@ export const KarmadaClusterSelector = () => {
       <Select.Option value="control-plane">
         <div className="flex flex-row justify-between items-center">
           <span className="mr-[2]">Karmada</span>
-          <Tag color="green" bordered={false}>
+          <Tag color="green" variant="filled">
             control-plane
           </Tag>
         </div>
@@ -57,7 +57,7 @@ export const KarmadaClusterSelector = () => {
         >
           <div className="flex flex-row justify-between items-center">
             <span className="mr-[2]">{cluster.objectMeta.name}</span>
-            <Tag color="blue" bordered={false}>
+            <Tag color="blue" variant="filled">
               member-cluster
             </Tag>
           </div>

@@ -25,6 +25,7 @@ import {
 import { Me } from '@/services/auth.ts';
 import { karmadaClient } from '@/services';
 import { useQuery } from '@tanstack/react-query';
+import { karmadaMemberClusterClient } from "@/services/base.ts";
 
 const AuthContext = createContext<{
   authenticated: boolean;
@@ -33,7 +34,7 @@ const AuthContext = createContext<{
 }>({
   authenticated: false,
   token: '',
-  setToken: () => {},
+  setToken: () => { },
 });
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -47,6 +48,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     queryFn: async () => {
       if (token) {
         karmadaClient.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${token}`;
+        karmadaMemberClusterClient.defaults.headers.common[
           'Authorization'
         ] = `Bearer ${token}`;
         // localStorage.setItem("token", token);
