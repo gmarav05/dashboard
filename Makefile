@@ -54,6 +54,16 @@ $(TARGETS):
 	hack/build.sh $@
 
 ###################
+# Test Targets    #
+###################
+
+# Run unit tests
+.PHONY: test
+test:
+	go test ./pkg/client/...
+
+
+###################
 # Docker Images   #
 ###################
 
